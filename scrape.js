@@ -2,9 +2,8 @@ require("dotenv").config();
 
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
-const SOURCE_URL =
-  process.env.SOURCE_URL || "https://www.worldometers.info/coronavirus/";
-const CORONA_API = process.env.CORONA_API || "http://localhost:3030/countries";
+const SOURCE_URL = process.env.SOURCE_URL;
+const CORONA_API = process.env.CORONA_API;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
 
 const cleanUpNumber = (text) => {
@@ -297,7 +296,8 @@ async function main() {
       });
     });
   console.log(">>> CORONA_API: " + CORONA_API);
-
+  console.log(">>> SOURCE: " + SOURCE_URL);
+  console.log(">>> TOKEN: " + AUTH_TOKEN.split(".")[0]);
   console.log(">>> DONE");
 }
 
