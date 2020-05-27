@@ -295,6 +295,7 @@ async function main() {
         }
       });
     });
+  console.log(">>> CORONA_API: " + CORONA_API);
 
   console.log(">>> DONE");
 }
