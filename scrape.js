@@ -5,6 +5,7 @@ const fetch = require("node-fetch");
 const SOURCE_URL =
   process.env.SOURCE_URL || "https://www.worldometers.info/coronavirus/";
 const CORONA_API = process.env.CORONA_API || "http://localhost:3030/countries";
+const AUTH_TOKEN = process.env.AUTH_TOKEN;
 
 const cleanUpNumber = (text) => {
   const cleaned = text.replace(/\s\s+/g, "").replace(/,/, "").replace(/\+/, "");
@@ -22,6 +23,7 @@ async function postData(url = "", data = {}) {
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${AUTH_TOKEN}`,
     },
     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(data), // body data type must match "Content-Type" header
@@ -261,7 +263,6 @@ async function main() {
       rows.each(async (i, el) => {
         const name = cleanUpText($(el).find("td").slice(1).eq(0).text());
         if (COUNTRIES_NAMES.includes(name)) {
-          console.log(name);
           const short = name.toLowerCase().replace(/\s/g, "");
           const totalCases = cleanUpNumber(
             $(el).find("td").slice(1).eq(1).text()
